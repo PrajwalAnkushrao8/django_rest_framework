@@ -10,7 +10,7 @@ variables:
 # Define workflow rules to only run pipeline on production branch
 workflow:
   rules:
-    - if: $CI_COMMIT_BRANCH == "production"
+    - if: $CI_COMMIT_BRANCH == "main"
 
 .default_script:
   before_script:
