@@ -1,7 +1,11 @@
-FROM Python:3.13
+FROM Python:3.10-slim
 
 WORKDIR /app
 
-COPY requirment
+COPY requirments.txt .
 
-COPY . . 
+RUN pip -r install requirements.txt
+
+COPY . .
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
