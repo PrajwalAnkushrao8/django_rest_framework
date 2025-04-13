@@ -30,7 +30,7 @@ build-image:
     - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
   script:
     - echo "Building Docker image..."
-    - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG .
+    - docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG -f helloworld_project/Dockerfile helloworld_project
     - echo "Pushing Docker image..."
     - docker push $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
 
@@ -48,8 +48,5 @@ deploy-to-server:
         docker rm $IMAGE_NAME || true &&
         docker run -d --name $IMAGE_NAME \
         -p 1234:8000 \
-        -e DATABASE_URL=\$DATABASE_URL \
-        -e SECRET_KEY=\$SECRET_KEY \
-        -e DEBUG=\$DEBUG \
         $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
       "
